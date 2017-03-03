@@ -20,23 +20,26 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
 
 app.get('/', function(req, res) {
 
 	request
    .get('https://newsapi.org/v1/articles?source=the-huffington-post&sortBy=top&apiKey=dfa82d950c17427692ee0798b9b0fab9')
-   .end(function(err, data){
+   .end(function(err, response){
 
-   	console.log(data);
+	   	console.log(response.body.articles);
 
-   	res.render("index", {articles: data});
+	   	res.render("index", { articles: response.body.articles });
+
+	});
 
 });
 
 
-
+// app.post('/search', function(req, res) {
+	
+// });
 
 app.listen(3000, function() {
-		console.log("Server started on port 3000");
+	console.log("app started on port 3000");
 });

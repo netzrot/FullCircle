@@ -22,7 +22,7 @@
         <div class="row"> 
             <div class="col-sm-12">
             <center>
-              <form class="form-inline">
+              <form action="/search" method="POST" class="form-inline">
                   <div class="form-group">
                     <label for="search">Search:</label>
                     <input type="text" class="form-control" id="search">
@@ -47,55 +47,18 @@
          	
 			<% for (i = 0; i < 5; i++) { %>
 
-			<div class="story">
-				<h2><%= articles[i].title %></h2>
+			<div id="huffpo">
+				<h4><%= articles[i].title %></h4>
 				<p><%= articles[i].description %></p>
-				<p><%= articles[i].url %></p>
+				<a href=<%= articles[i].url %>>Read full story</a>
 			</div>
 
 			<% } %> 
 
-            <h4><a href="http://www.huffingtonpost.com/entry/donald-trump-implodes-mike-pence_us_58b20bc8e4b060480e088f3f?ncid=inblnkushpmg00000009">If Donald Trump Implodes, Republicans Have A Silver Lining In Mike Pence</a></h4>
-            <p>Being cut out of the loop on Russia could be a good thing for the nation's second-in-command.</p>
-            <br>
-            <h4><a href="http://www.huffingtonpost.com/entry/donald-trump-implodes-mike-pence_us_58b20bc8e4b060480e088f3f?ncid=inblnkushpmg00000009">If Donald Trump Implodes, Republicans Have A Silver Lining In Mike Pence</a></h4>
-            <p>Being cut out of the loop on Russia could be a good thing for the nation's second-in-command.</p>
-            <br>
-            <h4><a href="http://www.huffingtonpost.com/entry/donald-trump-implodes-mike-pence_us_58b20bc8e4b060480e088f3f?ncid=inblnkushpmg00000009">If Donald Trump Implodes, Republicans Have A Silver Lining In Mike Pence</a></h4>
-            <p>Being cut out of the loop on Russia could be a good thing for the nation's second-in-command.</p>
-            <br>
-            <h4><a href="http://www.huffingtonpost.com/entry/donald-trump-implodes-mike-pence_us_58b20bc8e4b060480e088f3f?ncid=inblnkushpmg00000009">If Donald Trump Implodes, Republicans Have A Silver Lining In Mike Pence</a></h4>
-            <p>Being cut out of the loop on Russia could be a good thing for the nation's second-in-command.</p>
           </div>
 
-          <div class="col-sm-4" id="ap">
-          <center><h2 class="lead">what we know</h2></center>
-          <br>
-            <h4><a href="http://bigstory.ap.org/article/64a3a0e22caf4a5ca9d915b55d9cb870/malaysia-kim-jong-nam-died-within-20-minutes-poisoning">Malaysia: Poisoning of Kim caused paralysis, quick death</a></h4>
-            <p>Malaysia's health minister said Sunday that the dose of nerve agent given to North Korean ruler Kim Jong Un's exiled half brother was so high that it killed him within 20 minutes and caused…</p>
-            <br>
-            <h4><a href="http://bigstory.ap.org/article/64a3a0e22caf4a5ca9d915b55d9cb870/malaysia-kim-jong-nam-died-within-20-minutes-poisoning">Malaysia: Poisoning of Kim caused paralysis, quick death</a></h4>
-            <p>Malaysia's health minister said Sunday that the dose of nerve agent given to North Korean ruler Kim Jong Un's exiled half brother was so high that it killed him within 20 minutes and caused…</p>
-            <br>
-            <h4><a href="http://bigstory.ap.org/article/64a3a0e22caf4a5ca9d915b55d9cb870/malaysia-kim-jong-nam-died-within-20-minutes-poisoning">Malaysia: Poisoning of Kim caused paralysis, quick death</a></h4>
-            <p>Malaysia's health minister said Sunday that the dose of nerve agent given to North Korean ruler Kim Jong Un's exiled half brother was so high that it killed him within 20 minutes and caused…</p>
-          </div>
-
-          <div class="col-sm-4" id="fox">
-          <center><h2 class="lead">what the right is reading</h2></center>
-          <br>
-            <h4><a href="http://www.foxnews.com/us/2017/02/26/28-injured-after-truck-plows-into-new-orleans-parade-crowd-suspect-in-custody.html">MARDI GRAS MAYHEM: 28 injured in New Orleans after truck plows into parade crowd; suspect in custody</a></h4>
-            <p>A suspect is in custody after 28 people were injured on Saturday night when a vehicle plowed into a crowd watching a parade in the Mid-City section of New Orleans, police said.</p>
-            <h4><a href="http://www.foxnews.com/us/2017/02/26/28-injured-after-truck-plows-into-new-orleans-parade-crowd-suspect-in-custody.html">MARDI GRAS MAYHEM: 28 injured in New Orleans after truck plows into parade crowd; suspect in custody</a></h4>
-            <p>A suspect is in custody after 28 people were injured on Saturday night when a vehicle plowed into a crowd watching a parade in the Mid-City section of New Orleans, police said.</p>
-            <h4><a href="http://www.foxnews.com/us/2017/02/26/28-injured-after-truck-plows-into-new-orleans-parade-crowd-suspect-in-custody.html">MARDI GRAS MAYHEM: 28 injured in New Orleans after truck plows into parade crowd; suspect in custody</a></h4>
-            <p>A suspect is in custody after 28 people were injured on Saturday night when a vehicle plowed into a crowd watching a parade in the Mid-City section of New Orleans, police said.</p>
-          </div>
-
-        </div>
           
     </div>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+
   </body>
 </html>
