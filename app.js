@@ -23,18 +23,45 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res) {
 
+	
+
+	stories = {
+		
+	};
+
+
+
 	request
-   .get('https://newsapi.org/v1/articles?source=the-huffington-post&sortBy=top&apiKey=dfa82d950c17427692ee0798b9b0fab9')
-   .end(function(err, response){
+	   .get('https://newsapi.org/v1/articles?source=the-huffington-post&sortBy=top&apiKey=dfa82d950c17427692ee0798b9b0fab9')
+	   .end(function(err, response){
 
-	   	console.log(response.body.articles);
+	   stories.left = response.body.articles;
+ 
+		   request
+			   .get('https://newsapi.org/v1/articles?source=associated-press&sortBy=top&apiKey=dfa82d950c17427692ee0798b9b0fab9')
+			   .end(function(err, response){
+			   
+			   stories.center = response.body.articles;
+		   
 
-	   	res.render("index", { articles: response.body.articles });
+			   	request
+				   .get('https://newsapi.org/v1/articles?source=the-wall-street-journal&sortBy=top&apiKey=dfa82d950c17427692ee0798b9b0fab9')
+				   .end(function(err, response){
+
+		  
+			  		stories.right = response.body.articles;
+			   
+			   		res.render("index", { articles: stories });
+				});
+			   		
+			});  
 
 	});
 
 });
 
+// one array with three arrays
+// data.left data.center data.right have on object with three arrays: stories = { [], [], [] }
 
 // app.post('/search', function(req, res) {
 	

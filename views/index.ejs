@@ -48,9 +48,41 @@
 			<% for (i = 0; i < 5; i++) { %>
 
 			<div id="huffpo">
-				<h4><%= articles[i].title %></h4>
-				<p><%= articles[i].description %></p>
-				<a href=<%= articles[i].url %>>Read full story</a>
+				<h4><%= articles.left[i].title %></h4>
+				<p><%= articles.left[i].description %></p>
+				<a href=<%= articles.left[i].url %>>Read full story</a>
+			</div>
+
+			<% } %> 
+
+          </div>
+
+          <div class="col-sm-4" id="ap">
+          <center><h2 class="lead">what the center is reading</h2></center>
+          <br>
+         	
+			<% for (i = 0; i < 5; i++) { %>
+
+			<div id="huffpo">
+				<h4><%= articles.center[i].title %></h4>
+				<p><%= articles.center[i].description %></p>
+				<a href=<%= articles.center[i].url %>>Read full story</a>
+			</div>
+
+			<% } %> 
+
+          </div>
+
+          <div class="col-sm-4" id="ap">
+          <center><h2 class="lead">what the center is reading</h2></center>
+          <br>
+         	
+			<% for (i = 0; i < 5; i++) { %>
+
+			<div id="wsj">
+				<h4><%= articles.right[i].title %></h4>
+				<p><%= articles.right[i].description %></p>
+				<a href=<%= articles.right[i].url %>>Read full story</a>
 			</div>
 
 			<% } %> 
