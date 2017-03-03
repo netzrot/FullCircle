@@ -42,50 +42,46 @@
         <div class="row">
 
           <div class="col-sm-4" id="huffpo">
-          <center><h2 class="lead">what the left is reading</h2></center>
-          <br>
-         	
-			<% for (i = 0; i < 5; i++) { %>
+            <center><h2 class="lead">what the left says about it</h2></center>
+            <br>
+           	
+        			<!-- <% for (i = 0; i < 5; i++) { %> -->
 
-			<div id="huffpo">
-				<h4><%= articles.left[i].title %></h4>
-				<p><%= articles.left[i].description %></p>
-				<a href=<%= articles.left[i].url %>>Read full story</a>
-			</div>
+        			<div id="huffpo">
+        				<h4><%= results.left %></h4>
+        			</div>
 
-			<% } %> 
+        		<!-- 	<% } %> --> 
 
           </div>
 
           <div class="col-sm-4" id="ap">
-          <center><h2 class="lead">what the center is reading</h2></center>
-          <br>
-         	
-			<% for (i = 0; i < 5; i++) { %>
+            <center><h2 class="lead">what the center says about it</h2></center>
+            <br>
+           	
+        			<!-- <% for (i = 0; i < 5; i++) { %> -->
 
-			<div id="huffpo">
-				<h4><%= articles.center[i].title %></h4>
-				<p><%= articles.center[i].description %></p>
-				<a href=<%= articles.center[i].url %>>Read full story</a>
-			</div>
+        			<div id="huffpo">
+        				<h4><%= results.center %></h4>
+        		
+        			</div>
 
-			<% } %> 
+        		<!-- 	<% } %>  -->
 
           </div>
 
           <div class="col-sm-4" id="ap">
-          <center><h2 class="lead">what the right is reading</h2></center>
-          <br>
-         	
-			<% for (i = 0; i < 5; i++) { %>
+              <center><h2 class="lead">what the right says about it</h2></center>
+              <br>
+             	
+<!--         			<% for (i = 0; i < 5; i++) { %>
+ -->
+        			<div id="wsj">
+        				<h4><%= results.right %></h4>
+        	
+        			</div>
 
-			<div id="wsj">
-				<h4><%= articles.right[i].title %></h4>
-				<p><%= articles.right[i].description %></p>
-				<a href=<%= articles.right[i].url %>>Read full story</a>
-			</div>
-
-			<% } %> 
+    		<!-- 	<% } %>  -->
 
           </div>
 

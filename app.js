@@ -49,9 +49,9 @@ app.get('/', function(req, res) {
 				   .end(function(err, response){
 
 		  
-			  		stories.right = response.body.articles;
+			  		stories.right = response.body.articles; // response.body.articles is an array
 			   
-			   		res.render("index", { articles: stories });
+			   		res.render("index", { articles: stories }); // object of arrays
 				});
 			   		
 			});  
@@ -59,13 +59,21 @@ app.get('/', function(req, res) {
 	});
 
 });
+ 
 
-// one array with three arrays
-// data.left data.center data.right have on object with three arrays: stories = { [], [], [] }
+app.post('/search', function(req, res) {
 
-// app.post('/search', function(req, res) {
+	var newSearch = req.body.search;
+
+	results = {
+		left: ["Huffington Post" + newSearch],
+		center: ["Associtated Press" + newSearch],
+		right: ["Wall Street Journal" + newSearch]
+	};
+
+	res.render("results", { results });
 	
-// });
+});
 
 app.listen(3000, function() {
 	console.log("app started on port 3000");
