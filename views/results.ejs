@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>FullCircle</title>
+    <title>FullPicture</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
    <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,14 +11,9 @@
   </head>
   <body>
   <div class="container">
-      <center><h1>FullCircle<small> put the news in perspective.</small></h1></center>                    
-
-      <br>
-      <br>
-      <br>
-      <br>
-
-
+        <center> <a href='/'><h1>FullPicture<small> put the news in perspective.</small></h1></a></center>         
+            <br>
+            <br>
         <div class="row"> 
             <div class="col-sm-12">
             <center>
@@ -32,9 +27,6 @@
               </center>
             </div>
         </div>
-
-      <br>
-      <br>
       <br>
       <br>
       <br>
@@ -42,13 +34,14 @@
         <div class="row">
 
           <div class="col-sm-4" id="huffpo">
-            <center><h2 class="lead">what the left says about it</h2></center>
+            <center><h2 class="lead">what the <span>Huffington Post</span> says about it</h2></center>
             <br>
            	
         			<!-- <% for (i = 0; i < 5; i++) { %> -->
 
         			<div id="huffpo">
         				<h4><%= results.left %></h4>
+                <br>
         			</div>
 
         		<!-- 	<% } %> --> 
@@ -56,14 +49,14 @@
           </div>
 
           <div class="col-sm-4" id="ap">
-            <center><h2 class="lead">what the center says about it</h2></center>
+            <center><h2 class="lead">what the <span>AP</span> says about it</h2></center>
             <br>
            	
         			<!-- <% for (i = 0; i < 5; i++) { %> -->
 
         			<div id="huffpo">
         				<h4><%= results.center %></h4>
-        		
+                <br>        		
         			</div>
 
         		<!-- 	<% } %>  -->
@@ -71,20 +64,29 @@
           </div>
 
           <div class="col-sm-4" id="ap">
-              <center><h2 class="lead">what the right says about it</h2></center>
+              <center><h2 class="lead">what <span>Fox News</span> says about it</h2></center>
               <br>
              	
 <!--         			<% for (i = 0; i < 5; i++) { %>
  -->
-        			<div id="wsj">
+        			<div id="fox">
         				<h4><%= results.right %></h4>
-        	
+        	      <br>
         			</div>
 
     		<!-- 	<% } %>  -->
 
           </div>
 
+          <br>
+          <br>
+          <br>
+          <br>
+          <div class="row">
+            <div class="col-sm-12" id="ap">
+              <p>with support from news api. <a href="mailto:thorstenwschroeder@gmail.com?Subject=Hello%20again" target="_top">Contact Me</a></p>
+            </div>
+          </div>
           
     </div>
 

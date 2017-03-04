@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>FullCircle</title>
+    <title>FullPicture</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
    <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,14 +11,9 @@
   </head>
   <body>
   <div class="container">
-      <center><h1>FullCircle<small> put the news in perspective.</small></h1></center>                    
-
+      <center> <a href='/'><h1>FullPicture<small> put the news in perspective.</small></h1></a></center>         
       <br>
       <br>
-      <br>
-      <br>
-
-
         <div class="row"> 
             <div class="col-sm-12">
             <center>
@@ -32,62 +27,71 @@
               </center>
             </div>
         </div>
-
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
+    <br>
+    <br>
+    <br>
 
         <div class="row">
 
-          <div class="col-sm-4" id="huffpo">
-          <center><h2 class="lead">what the left is reading</h2></center>
-          <br>
+          	<div class="col-sm-4" id="huffpo">
+          	<center><h2 class="lead">What the <span class="lead">Huffington Post</span> says</h2></center>
+          	<br>
          	
-			<% for (i = 0; i < 5; i++) { %>
+			<% for (i = 0; i < 6; i++) { %>
 
 			<div id="huffpo">
 				<h4><%= articles.left[i].title %></h4>
 				<p><%= articles.left[i].description %></p>
-				<a href=<%= articles.left[i].url %>>Read full story</a>
+				<a href=<%= articles.left[i].url %>>Read full story<br><br></a>
 			</div>
 
 			<% } %> 
 
-          </div>
+        </div>
 
-          <div class="col-sm-4" id="ap">
-          <center><h2 class="lead">what the center is reading</h2></center>
-          <br>
+        <div class="col-sm-4" id="ap">
+        	<center><h2 class="lead">What the <span class="lead">AP</span> says</h2></center>
+          	<br>
          	
-			<% for (i = 0; i < 5; i++) { %>
+			<% for (i = 0; i < 4; i++) { %>
 
 			<div id="huffpo">
 				<h4><%= articles.center[i].title %></h4>
 				<p><%= articles.center[i].description %></p>
-				<a href=<%= articles.center[i].url %>>Read full story</a>
+				<a href=<%= articles.center[i].url %>>Read full story<br><br></a>
 			</div>
 
 			<% } %> 
 
-          </div>
+        </div>
 
-          <div class="col-sm-4" id="ap">
-          <center><h2 class="lead">what the right is reading</h2></center>
-          <br>
-         	
-			<% for (i = 0; i < 5; i++) { %>
+        <div class="col-sm-4" id="ap">
+	        <center><h2 class="lead">What <span class="lead">Fox News</span> says</h2></center>
+	        <br>
+	         	
+			<% for (i = 0; i < 8; i++) { %>
 
-			<div id="wsj">
+			<div id="fox">
 				<h4><%= articles.right[i].title %></h4>
 				<p><%= articles.right[i].description %></p>
-				<a href=<%= articles.right[i].url %>>Read full story</a>
+				<a href=<%= articles.right[i].link %>>Read full story<br><br></a>
+				<br>
 			</div>
 
 			<% } %> 
 
           </div>
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div class="row">
+          	<div class="col-sm-12" id="ap">
+          		<p>with support from newsapi and rsstojson. <a href="mailto:thorstenwschroeder@gmail.com?Subject=Hello%20again" target="_top">Contact Me</a></p>
+          	</div>
+        </div>
 
           
     </div>
