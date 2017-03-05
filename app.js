@@ -60,7 +60,7 @@ app.post('/search', function(req, res) {
 	results = {
 		left: [],
 		center: ["Associated Press" + " " + newSearch],
-		right: ["Fox News" + " " + newSearch]
+		
 	};
 	
 
@@ -81,40 +81,41 @@ app.post('/search', function(req, res) {
 			    	};
 			    	
 			    	results.left.push(story);
+		     	
+			    });				    
+			};
 
-			    	
-			    				   
-			     	// console.log(url);
-			     	// console.log(text);
-			     	// console.log(story);			     	
-			    });	
+			requesttool('http://api.foxnews.com/v1/content/search?q=' + newSearch + '&fields=description,title,url,image,type,taxonomy&sort=latest&section.path=fnc&type=article&start=0&callback=angular.callbacks._0&cb=201735140', function (error, response, html) {
+			
+					if (!error && response.statusCode == 200) {
+						var body = response.body.slice(21, response.body.length-1);
 
-			    console.log(results);
-			    
-			}
+						var bodyObj = JSON.parse(body);
 
-		res.render("results", { results });
+						//console.log(bodyObj.response.docs);
+						results.right = bodyObj.response.docs;
+						console.log(results.right);
+					    
+					 // 	var $ = cheerio.load(html);
+
+					 // 	$('a.ng-binding').each(function(i, element){	
+
+					 //    	var a = $(this); //gives link
+					 //    	var text = a.text(); // gives text in link
+				 	// 		console.log(text);  
+						// });
+					};
+
+				// console.log(results);
+				// console.log(newSearch);
+				res.render("results", { results });
+			});
+
 	});
-
-	// request
-	// 	.get('http://www.huffingtonpost.com/search?keywords='+ newSearch + '&sortBy=recency&sortOrder=desc')
-	// 	.end(function(err, response){
-
-	// 		//console.log(response);
-	// 		var $ = cheerio.load(response);
-	// 		//console.log($);
-
-	// 		//searchresults = [];
-
-	// 		//searchresults.push($('.card__link').innerHTML);
-
-	// 		console.log($('a'));
-
-	// 		//console.log(searchresults);
-
-	// 	})
-	
 });
+
+
+
 
 app.listen(3000, function() {
 	console.log("app started on port 3000");

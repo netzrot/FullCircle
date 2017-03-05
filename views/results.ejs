@@ -68,14 +68,14 @@
               <center><h2 class="lead">what <span>Fox News</span> says about it</h2></center>
               <br>
              	
-<!--         			<% for (i = 0; i < 5; i++) { %>
- -->
+         			<% for (i = 0; i < 5; i++) { %>
+              
         			<div id="fox">
-        				<h4><%= results.right %></h4>
-        	      <br>
+        				<h4><%= results.right[i].title %></h4>
+                <a href=<%= results.right[i].url %>>Read full story<br><br></a>
         			</div>
 
-    		<!-- 	<% } %>  -->
+    		      <% } %>
 
           </div>
 
