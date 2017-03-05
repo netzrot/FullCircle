@@ -32,7 +32,7 @@ app.get('/', function(req, res) {
 	   .end(function(err, response){
 
 	   		stories.left = response.body.articles;
- 
+
 		   	request
 			   .get('https://newsapi.org/v1/articles?source=associated-press&sortBy=top&apiKey=dfa82d950c17427692ee0798b9b0fab9')
 			   .end(function(err, response){
@@ -57,35 +57,43 @@ app.post('/search', function(req, res) {
 
 	var newSearch = req.body.search;
 
-	results = {};
+	results = {
+		left: [],
+		center: ["Associated Press" + " " + newSearch],
+		right: ["Fox News" + " " + newSearch]
+	};
 	
 
 	requesttool('http://www.huffingtonpost.com/search?keywords='+ newSearch + '&sortBy=recency&sortOrder=desc', function (error, response, html) {
 			
 			if (!error && response.statusCode == 200) {
 			    var $ = cheerio.load(html);
-
+			    
 			    $('a.card__link').each(function(i, element){
 			    	
 			      	var a = $(this); //gives link
-			      	var text = a.text();
+			      	var text = a.text(); // gives text in link
 			      	var url = a.attr('href'); // gives url
-			     	var story = {
+
+			     	story = {
 			    		headline: text,
 			    		link: url
 			    	};
+			    	
+			    	results.left.push(story);
 
-			    	// results.left = [];
-			    	// results.left.push(story);
+			    	
 			    				   
 			     	// console.log(url);
 			     	// console.log(text);
-			     	
-			     	
+			     	// console.log(story);			     	
 			    });	
 
-			    console.log(story);
+			    console.log(results);
+			    
 			}
+
+		res.render("results", { results });
 	});
 
 	// request
@@ -105,14 +113,6 @@ app.post('/search', function(req, res) {
 	// 		//console.log(searchresults);
 
 	// 	})
-
-	results = {
-		left: ["Huffington Post" + " " + newSearch],
-		center: ["Associated Press" + " " + newSearch],
-		right: ["Fox News" + " " + newSearch]
-	};
-
-	res.render("results", { results });
 	
 });
 

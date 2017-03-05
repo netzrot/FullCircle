@@ -36,15 +36,16 @@
           <div class="col-sm-4" id="huffpo">
             <center><h2 class="lead">what the <span>Huffington Post</span> says about it</h2></center>
             <br>
-           	
-        			<!-- <% for (i = 0; i < 5; i++) { %> -->
 
-        			<div id="huffpo">
-        				<h4><%= results.left %></h4>
-                <br>
-        			</div>
+              <% for (i = 0; i < 10; i += 2) { %>
 
-        		<!-- 	<% } %> --> 
+              <div id="huffpo">
+                <h4><%= results.left[i].headline %></h4>
+                <a href=<%= results.left[i].link %>>Read full story<br><br></a>
+              </div>
+
+              <% } %> 
+              
 
           </div>
 
@@ -54,7 +55,7 @@
            	
         			<!-- <% for (i = 0; i < 5; i++) { %> -->
 
-        			<div id="huffpo">
+        			<div id="ap">
         				<h4><%= results.center %></h4>
                 <br>        		
         			</div>
