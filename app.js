@@ -93,21 +93,19 @@ app.post('/search', function(req, res) {
 		    	
 				    		var a = $(this); //gives link
 				    		var text = a.text(); // gives text in link
-		 		   			var url = a.attr('href'); // gives url
+		 		   			var url = 'http://hosted.ap.org/' + a.attr('href'); // gives url
 
-			 		    story = {
-				  			headline: text,
-				  			link: url
-			  		  	}
+				 		    story = {
+					  			headline: text,
+					  			link: url
+				  		  	}
 
-			  		  	results.center.push(story);
+				  		  	results.center.push(story);
 
 		  			    });
 	     	
 		    		};			
 	    
-				
-
 					requesttool('http://api.foxnews.com/v1/content/search?q=' + newSearch + '&fields=description,title,url,image,type,taxonomy&sort=latest&section.path=fnc&type=article&start=0&callback=angular.callbacks._0&cb=201735140', function (error, response, html) {
 					
 						if (!error && response.statusCode == 200) {
