@@ -53,18 +53,18 @@
             <center><h2 class="lead">what the <span>AP</span> says about it</h2></center>
             <br>
            	
-        			<!-- <% for (i = 0; i < 5; i++) { %> -->
+        			<% for (i = 0; i < 5; i++) { %>
 
         			<div id="ap">
-        				<h4><%= results.center %></h4>
-                <br>        		
-        			</div>
+                <h4><%= results.center[i].headline %></h4>
+                <a href=<%= results.center[i].url %>>Read full story<br><br></a>
+              </div>
 
-        		<!-- 	<% } %>  -->
+        			<% } %> 
 
           </div>
 
-          <div class="col-sm-4" id="ap">
+          <div class="col-sm-4" id="fox">
               <center><h2 class="lead">what <span>Fox News</span> says about it</h2></center>
               <br>
              	
