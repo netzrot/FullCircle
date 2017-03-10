@@ -46,6 +46,10 @@ app.get('/', function(req, res) {
 
 						   		console.log(response.body.items);
 
+						   		for (var i = 0; i < response.body.items.length; i++) {
+						   			response.body.items[i].description = response.body.items[i].description.split("<img")[0];
+						   		}
+
 						   		stories.right = response.body.items; // response.body.items is an array
 						   		res.render("index", { articles: stories }); // object of arrays
 					   	})
@@ -67,6 +71,10 @@ app.post('/search', function(req, res) {
 
 	requesttool('http://www.huffingtonpost.com/search?keywords='+ newSearch + '&sortBy=recency&sortOrder=desc', function (error, response, html) {
 			
+		// if (error) {
+			// res.redirect('/error');		
+		// };
+
 		if (!error && response.statusCode == 200) {
 		    var $ = cheerio.load(html);
 		    
@@ -87,7 +95,7 @@ app.post('/search', function(req, res) {
 		};
 
 			requesttool('http://hosted.ap.org/dynamic/external/search.hosted.ap.org/wireCoreTool/Search?SITE=AP&SECTION=HOME&TEMPLATE=DEFAULT&query=' + newSearch, function (error, response, html) {
-		
+
 					if (!error && response.statusCode == 200) {
 						var $ = cheerio.load(response.body);
 		    
