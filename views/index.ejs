@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>FullPicture</title>
+    <title>FullStory</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
    <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,7 @@
   </head>
   <body>
   <div class="container">
-      <center> <a href='/'><h1>FullPicture<small> put the news in perspective.</small></h1></a></center>         
+      <center> <a href='/'><h1>FullStory<small> put the news in perspective.</small></h1></a></center>         
       <br>
       <br>
         <div class="row"> 
@@ -19,7 +19,7 @@
             <center>
               <form action="/search" method="POST" class="form-inline">
                   <div class="form-group">
-                    <label for="search">Search:</label>
+                    <label for="search">Search for topic:</label>
                     <input type="text" class="form-control" name="search">
                   </div>
                   <button type="submit" id="submit" class="btn btn-default">Submit</button>
@@ -34,7 +34,7 @@
         <div class="row">
 
           	<div class="col-sm-4" id="huffpo">
-          	<center><h2 class="lead">What the <span class="lead">Huffington Post</span> says</h2></center>
+          	<center><h2 class="lead">What's top on the <span class="lead">Huffington Post</span>?</h2></center>
           	<br>
          	
 			<% for (i = 0; i < 6; i++) { %>
@@ -42,7 +42,7 @@
 			<div id="huffpo">
 				<h4><%= articles.left[i].title %></h4>
 				<p><%= articles.left[i].description %></p>
-				<a href=<%= articles.left[i].url %>>Read full story<br><br></a>
+				<a target="_blank" href=<%= articles.left[i].url %>>Read full story<br><br></a>
 			</div>
 
 			<% } %> 
@@ -50,7 +50,7 @@
         </div>
 
         <div class="col-sm-4" id="ap">
-        	<center><h2 class="lead">What the <span class="lead">AP</span> says</h2></center>
+        	<center><h2 class="lead">What's top on the <span class="lead">AP</span>?</h2></center>
           	<br>
          	
 			<% for (i = 0; i < 4; i++) { %>
@@ -58,7 +58,7 @@
 			<div id="huffpo">
 				<h4><%= articles.center[i].title %></h4>
 				<p><%= articles.center[i].description %></p>
-				<a href=<%= articles.center[i].url %>>Read full story<br><br></a>
+				<a target="_blank" href=<%= articles.center[i].url %>>Read full story<br><br></a>
 			</div>
 
 			<% } %> 
@@ -66,16 +66,15 @@
         </div>
 
         <div class="col-sm-4" id="ap">
-	        <center><h2 class="lead">What <span class="lead">Fox News</span> says</h2></center>
+	        <center><h2 class="lead">What's top on <span class="lead">Fox News</span>?</h2></center>
 	        <br>
 	         	
-			<% for (i = 0; i < 8; i++) { %>
+			<% for (i = 0; i < 5; i++) { %>
 
 			<div id="fox">
 				<h4><%= articles.right[i].title %></h4>
 				<p><%= articles.right[i].description %></p>
-				<a href=<%= articles.right[i].link %>>Read full story<br><br></a>
-				<br>
+				<a target="_blank" href=<%= articles.right[i].link %>>Read full story<br><br></a>
 			</div>
 
 			<% } %> 

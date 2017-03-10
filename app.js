@@ -41,8 +41,10 @@ app.get('/', function(req, res) {
 		   
 					   	
 					  	request
-						   .get('https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Ffeeds.foxnews.com%2Ffoxnews%2Flatest&api_key=ooep7aqikxp2cukiicftuayxtgrfqyz4f0jvngqx')
+						   .get('https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Ffeeds.foxnews.com%2Ffoxnews%2Fmost-popular&api_key=ooep7aqikxp2cukiicftuayxtgrfqyz4f0jvngqx')
 						   .end(function(err, response){
+
+						   		console.log(response.body.items);
 
 						   		stories.right = response.body.items; // response.body.items is an array
 						   		res.render("index", { articles: stories }); // object of arrays
