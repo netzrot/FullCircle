@@ -36,15 +36,17 @@ app.get('/', function(req, res) {
 		   	request
 			   .get('https://newsapi.org/v1/articles?source=associated-press&sortBy=top&apiKey=dfa82d950c17427692ee0798b9b0fab9')
 			   .end(function(err, response){
-			   
+
+					for (var i = 0; i < response.body.articles.length; i++) {
+						   			response.body.articles[i].description = response.body.articles[i].description.substring(0,145)+"...";
+					}
+	   
 			   		stories.center = response.body.articles; // pushed array into object
 		   
 					   	
 					  	request
 						   .get('https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Ffeeds.foxnews.com%2Ffoxnews%2Fmost-popular&api_key=ooep7aqikxp2cukiicftuayxtgrfqyz4f0jvngqx')
 						   .end(function(err, response){
-
-						   		console.log(response.body.items);
 
 						   		for (var i = 0; i < response.body.items.length; i++) {
 						   			response.body.items[i].description = response.body.items[i].description.split("<img")[0];
