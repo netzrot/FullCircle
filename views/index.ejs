@@ -33,48 +33,48 @@
 
         <div class="row">
 
-          	<div class="col-sm-4" id="huffpo">
-          	<center><h2 class="lead">What's top on the <span class="lead">Huffington Post</span>?</h2></center>
+          	<div class="col-sm-4" class="source">
+          	<center><h2 class="lead">What's top on the Huffington Post?</h2></center>
+          	<br>
+         	
+			<% for (i = 0; i < maxStories; i++) { %>
+
+			<div class="stories">
+				<h4><%= stories.left[i].title %></h4>
+				<p id="description"><%= stories.left[i].description %></p>
+				<a target="_blank" href=<%= stories.left[i].url %>>Read full story<br><br></a>
+			</div>
+
+			<% } %> 
+
+        </div>
+
+        <div class="col-sm-4" class="source">
+        	<center><h2 class="lead">What's top on the AP?</h2></center>
           	<br>
          	
 			<% for (i = 0; i < 6; i++) { %>
 
-			<div id="huffpo">
-				<h4><%= articles.left[i].title %></h4>
-				<p id="description"><%= articles.left[i].description %></p>
-				<a target="_blank" href=<%= articles.left[i].url %>>Read full story<br><br></a>
+			<div class="stories">
+				<h4><%= stories.center[i].title %></h4>
+				<p id="description"><%= stories.center[i].description %></p>
+				<a target="_blank" href=<%= stories.center[i].url %>>Read full story<br><br></a>
 			</div>
 
 			<% } %> 
 
         </div>
 
-        <div class="col-sm-4" id="ap">
-        	<center><h2 class="lead">What's top on the <span class="lead">AP</span>?</h2></center>
-          	<br>
-         	
-			<% for (i = 0; i < 4; i++) { %>
-
-			<div id="huffpo">
-				<h4><%= articles.center[i].title %></h4>
-				<p id="description"><%= articles.center[i].description %></p>
-				<a target="_blank" href=<%= articles.center[i].url %>>Read full story<br><br></a>
-			</div>
-
-			<% } %> 
-
-        </div>
-
-        <div class="col-sm-4" id="ap">
-	        <center><h2 class="lead">What's top on <span class="lead">Fox News</span>?</h2></center>
+        <div class="col-sm-4" class="source">
+	        <center><h2 class="lead">What's top on Fox News?</h2></center>
 	        <br>
 	         	
-			<% for (i = 0; i < 5; i++) { %>
+			<% for (i = 0; i < 6; i++) { %>
 
-			<div id="fox">
-				<h4><%= articles.right[i].title %></h4>
-				<p id="description"><%= articles.right[i].description %></p>
-				<a target="_blank" href=<%= articles.right[i].link %>>Read full story<br><br></a>
+			<div class="stories">
+				<h4><%= stories.right[i].title %></h4>
+				<p id="description"><%= stories.right[i].description %></p>
+				<a target="_blank" href=<%= stories.right[i].link %>>Read full story<br><br></a>
 			</div>
 
 			<% } %> 

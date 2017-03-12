@@ -6,8 +6,7 @@ var request = require('superagent');
 var cheerio = require('cheerio');
 var requesttool = require('request');
 
-var index = require('./routes/index');
-
+var loadStories = require('./loadStories');
 
 var app = express();
 
@@ -23,43 +22,34 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+var stories = {
+	lastUpdated: 0,
+	left: [],
+	center: [],
+	right: []
+};
+
+var CacheTime = 5 * 60 * 1000;
+
 app.get('/', function(req, res) {
+	if (stories.lastUpdated < (new Date()) - CacheTime) {
+		loadStories(process.env).
+		then(function(freshStories) {
+			stories = freshStories;
+			stories.lastUpdated = new Date();
 
-	stories = {};
-
-	request
-	   .get('https://newsapi.org/v1/articles?source=the-huffington-post&sortBy=top&apiKey=dfa82d950c17427692ee0798b9b0fab9')
-	   .end(function(err, response){
-
-	   		stories.left = response.body.articles;
-
-		   	request
-			   .get('https://newsapi.org/v1/articles?source=associated-press&sortBy=top&apiKey=dfa82d950c17427692ee0798b9b0fab9')
-			   .end(function(err, response){
-
-					for (var i = 0; i < response.body.articles.length; i++) {
-						   			response.body.articles[i].description = response.body.articles[i].description.substring(0,145)+"...";
-					}
-	   
-			   		stories.center = response.body.articles; // pushed array into object
-		   
-					   	
-					  	request
-						   .get('https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Ffeeds.foxnews.com%2Ffoxnews%2Fmost-popular&api_key=ooep7aqikxp2cukiicftuayxtgrfqyz4f0jvngqx')
-						   .end(function(err, response){
-
-						   		for (var i = 0; i < response.body.items.length; i++) {
-						   			response.body.items[i].description = response.body.items[i].description.split("<img")[0];
-						   		}
-
-						   		stories.right = response.body.items; // response.body.items is an array
-						   		res.render("index", { articles: stories }); // object of arrays
-					   	})
-			});  
-	});
+			res.render("index", { stories, maxStories: 6 }); // object of arrays
+		}).
+		catch(function(err) {
+			res.status(500).render('error'); //send(err.toString());
+		});
+	} else {
+		res.render("index", { stories, maxStories: 6 }); // object of arrays
+	}
 });
 
- 
+
+// get results out of app.js
 
 app.post('/search', function(req, res) {
 
@@ -74,10 +64,13 @@ app.post('/search', function(req, res) {
 	requesttool('http://www.huffingtonpost.com/search?keywords='+ newSearch + '&sortBy=recency&sortOrder=desc', function (error, response, html) {
 			
 		// if (error) {
-			// res.redirect('/error');		
+		// 	res.redirect('/error');		
 		// };
 
 		if (!error && response.statusCode == 200) {
+
+			console.log(response.body);
+
 		    var $ = cheerio.load(html);
 		    
 		    $('a.card__link').each(function(i, element){
