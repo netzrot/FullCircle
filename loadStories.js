@@ -22,7 +22,7 @@ module.exports = function loadStories(apiKeys) {
 				   .get('https://newsapi.org/v1/articles?source=associated-press&sortBy=top&apiKey=' + apiKeys.NEWSAPI_KEY)
 				   .end(function(err, response){
 
-				   		if (err) { return reject(err); }
+				   		//if (err) { return reject(err); }
 
 				   		// response.body.articles.map(
 				   		// 	item => shortenDescription(item)

@@ -41,7 +41,7 @@ app.get('/', function(req, res) {
 			res.render("index", { stories, maxStories: 6 }); // object of arrays
 		}).
 		catch(function(err) {
-			res.status(500).render('error'); //send(err.toString());
+			res.status(500).render("error"); //send(err.toString());
 		});
 	} else {
 		res.render("index", { stories, maxStories: 6 }); // object of arrays
