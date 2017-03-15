@@ -7,7 +7,7 @@ var cheerio = require('cheerio');
 var request = require('request');
 
 var loadStories = require('./loadStories');
-var loadResults = require('./loadResults');
+//var loadResults = require('./loadResults');
 
 var app = express();
 
@@ -104,7 +104,6 @@ app.post('/search', function(req, res) {
 			  	}
 
 			results.center.push(story);
-
 		  	});
 	     	
 		};			
@@ -117,7 +116,9 @@ app.post('/search', function(req, res) {
 								
 			results.right = bodyObj.response.docs;
 			res.render("results", { results });					    
-		};
+		} else {
+			res.status(500).render("error");
+		}
 	});
 	});
 	});
