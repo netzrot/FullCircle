@@ -14,6 +14,7 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.set('port', (process.env.PORT || 5000)); // Heroku
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -125,9 +126,10 @@ app.post('/search', function(req, res) {
 	
 });
 
-
-
-
-app.listen(3000, function() {
-	console.log("app started on port 3000");
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
 });
+
+// app.listen(3000, function() {
+// 	console.log("app started on port 3000");
+// });
