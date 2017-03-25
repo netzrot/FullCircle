@@ -16,10 +16,6 @@ module.exports = function loadStories(apiKeys) {
 
 		    	if (err) { return reject(err); }
 
-
-
-		    	//console.log(response.body.articles[0].publishedAt.split("T")[0] + " " + response.body.articles[0].publishedAt.split("T")[1].substring(0, 8));
-
 				for (var i = 0; i < response.body.articles.length; i++) {
 					if (response.body.articles[i].publishedAt) {
 					response.body.articles[i].publishedAt = response.body.articles[i].publishedAt.split("T")[0] + " " + response.body.articles[i].publishedAt.split("T")[1].substring(0, 8);
@@ -43,7 +39,9 @@ module.exports = function loadStories(apiKeys) {
 				}
 						
 				for (var i = 0; i < response.body.articles.length; i++) {
+					if (response.body.articles[i].publishedAt) {
 					response.body.articles[i].publishedAt = response.body.articles[i].publishedAt.split("T")[0] + " " + response.body.articles[i].publishedAt.split("T")[1].substring(0, 8);
+					};
 				}
 		   
 		   		stories.center = response.body.articles; // pushes array into object
