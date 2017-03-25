@@ -91,7 +91,7 @@ app.post('/search', function(req, res) {
 
 		if (!error && response.statusCode == 200) {
 			var $ = cheerio.load(response.body);
-		    
+
 			$('span.latestnews > a').each(function(i, element){
 		    	
 				var a = $(this); //gives link
