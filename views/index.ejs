@@ -3,15 +3,35 @@
   <head>
     <title>FullStory</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- META PROPS FOR FACEBOOK SHARE BUTTON -->
+    <meta property="og:url"           content="https://thefullstory.herokuapp.com/" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="Full Story" />
+    <meta property="og:description"   content="put the news in perspective" />
+    <meta property="og:image"         content="https://thefullstory.herokuapp.com/" />
   </head>
   <body>
+
+  <!-- JAVASCRIPT SDK FOR FACEBOOK SHARE BUTTON -->
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
   <div class="container">
-      <center> <a href='/'><h1>FullStory<small> put the news in perspective.</small></h1></a></center>         
+      <center> <a href='/'><h1>FullStory<small> put the news in perspective.</small></h1></a></center> 
+
+      <div class="fb-share-button" data-href="https://thefullstory.herokuapp.com/" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fthefullstory.herokuapp.com%2F&amp;src=sdkpreparse">Share</a></div>
+
       <br>
       <br>
         <div class="row"> 
