@@ -1,4 +1,5 @@
 const express = require('express');
+const favicon = require('serve-favicon');
 const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
@@ -15,12 +16,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.set('port', (process.env.PORT || 5000)); // Heroku
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
 
 let stories = {
 	lastUpdated: 0, // 1970

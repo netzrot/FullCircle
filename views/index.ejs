@@ -18,103 +18,84 @@
   <body>
   <!-- FACEBOOK SHARE BUTTON DEPENDENCY -->
   <div id="fb-root"></div>
-
   <div class="container">
-      <center> <a href='/'><h1>FullStory<small> put the news in perspective.</small></h1></a></center> 
-
-      <div id="social-media">
-        <div class="fb-share-button social-media-button-container" data-href="https://thefullstory.herokuapp.com/" data-layout="button_count" data-size="large" data-mobile-iframe="true">
-          <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fthefullstory.herokuapp.com%2F&amp;src=sdkpreparse">Share</a>
-        </div><p />
-        <div class="social-media-button-container">
-          <a href="https://twitter.com/intent/tweet?text=Put%20the%20news%20in%20perspective%20with%20FullStory&hashtags=thefullstory,media" class="twitter-share-button" data-show-count="false" data-size="large">Tweet</a>
-        </div>
+    <center>
+      <a href='/'>
+        <h1>FullStory<small> put the news in perspective.</small></h1>
+      </a>
+    </center> 
+    <div id="social-media">
+      <div class="fb-share-button social-media-button-container" data-href="https://thefullstory.herokuapp.com/" data-layout="button_count" data-size="large" data-mobile-iframe="true">
+        <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fthefullstory.herokuapp.com%2F&amp;src=sdkpreparse">Share</a>
+      </div><p />
+      <div class="social-media-button-container">
+        <a href="https://twitter.com/intent/tweet?text=Put%20the%20news%20in%20perspective%20with%20FullStory&hashtags=thefullstory,media" class="twitter-share-button" data-show-count="false" data-size="large">Tweet</a>
       </div>
-
-      <br>
-      <br>
-        <div class="row"> 
-            <div class="col-sm-12">
-            <center>
-              <form action="/search" method="POST" class="form-inline">
-                  <div class="form-group">
-                    <label for="search">Search for topic:</label>
-                    <input type="text" class="form-control" name="search">
-                  </div>
-                  <button type="submit" id="submit" class="btn btn-default">Submit</button>
-              </form>
-              </center>
-            </div>
+    </div>
+    <br />
+    <br />
+    <div class="row"> 
+        <div class="col-sm-12">
+          <center>
+            <form action="/search" method="POST" class="form-inline">
+                <div class="form-group">
+                  <label for="search">Search for topic:</label>
+                  <input type="text" class="form-control" name="search">
+                </div>
+                <button type="submit" id="submit" class="btn btn-default">Submit</button>
+            </form>
+          </center>
         </div>
-    <br>
-    <br>
-    <br>
-
-        <div class="row">
-
-          	<div class="col-sm-4" class="source">
-          	<center><h2 class="lead">top news from the L E F T</h2></center>
-          	<br>
-         	
-			<% for (i = 0; i < maxStories; i++) { %>
-
-			<div class="stories">
-				<h4><%= stories.left[i].title %></h4>
-				<p id="description"><%= stories.left[i].description %></p>
-				<p><%= stories.left[i].publishedAt %></p>
-				<a target="_blank" href=<%= stories.left[i].url %>>Read full story<br><br></a>
-			</div>
-
-			<% } %> 
-
-        </div>
-
-        <div class="col-sm-4" class="source">
-        	<center><h2 class="lead">top news from the C E N T E R</h2></center>
-          	<br>
-         	
-			<% for (i = 0; i < 6; i++) { %>
-
-			<div class="stories">
-				<h4><%= stories.center[i].title %></h4>
-				<p id="description"><%= stories.center[i].description %></p>
-				<p><%= stories.center[i].publishedAt %></p>
-				<a target="_blank" href=<%= stories.center[i].url %>>Read full story<br><br></a>
-			</div>
-
-			<% } %> 
-
-        </div>
-
-        <div class="col-sm-4" class="source">
-	        <center><h2 class="lead">top news from the R I G H T</h2></center>
-	        <br>
-	         	
-			<% for (i = 0; i < 6; i++) { %>
-
-			<div class="stories">
-				<h4><%= stories.right[i].title %></h4>
-				<p id="description"><%= stories.right[i].description %></p>
-				<p><%= stories.right[i].pubDate %></p>
-				<a target="_blank" href=<%= stories.right[i].link %>>Read full story<br><br></a>
-			</div>
-
-			<% } %> 
-
-          </div>
-
-        <br>
-        <br>
-        <br>
-        <br>
-
-        <div class="row">
-          	<div class="col-sm-12" id="ap">
-          		<p>with support from <a target="_blank" href="https://newsapi.org">newsapi</a> and <a target="_blank" href="https://rss2json.com/">rsstojson</a>. <a href="mailto:thorstenwschroeder@gmail.com?Subject=Hello%20again" target="_top">Contact Me</a></p>
-          	</div>
-        </div>
-
-          
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="row">
+      <div class="col-sm-4" class="source">
+        <center><h2 class="lead">top news from the L E F T</h2></center>
+        <br />   	
+  			<% for (i = 0; i < maxStories; i++) { %>
+    			<div class="stories">
+    				<h4><%= stories.left[i].title %></h4>
+    				<p id="description"><%= stories.left[i].description %></p>
+    				<p><%= stories.left[i].publishedAt %></p>
+    				<a target="_blank" href=<%= stories.left[i].url %>>Read full story<br><br></a>
+    			</div>
+  			<% } %> 
+      </div>
+      <div class="col-sm-4" class="source">
+      	<center><h2 class="lead">top news from the C E N T E R</h2></center>
+        <br />     	
+  			<% for (i = 0; i < 6; i++) { %>
+    			<div class="stories">
+    				<h4><%= stories.center[i].title %></h4>
+    				<p id="description"><%= stories.center[i].description %></p>
+    				<p><%= stories.center[i].publishedAt %></p>
+    				<a target="_blank" href=<%= stories.center[i].url %>>Read full story<br /><br /></a>
+    			</div>
+  			<% } %> 
+      </div>
+      <div class="col-sm-4" class="source">
+        <center><h2 class="lead">top news from the R I G H T</h2></center>
+        <br />
+  			<% for (i = 0; i < 6; i++) { %>
+    			<div class="stories">
+    				<h4><%= stories.right[i].title %></h4>
+    				<p id="description"><%= stories.right[i].description %></p>
+    				<p><%= stories.right[i].pubDate %></p>
+    				<a target="_blank" href=<%= stories.right[i].link %>>Read full story<br><br></a>
+    			</div>
+  			<% } %> 
+      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <div class="row">
+        	<div class="col-sm-12" id="ap">
+        		<p>with support from <a target="_blank" href="https://newsapi.org">newsapi</a> and <a target="_blank" href="https://rss2json.com/">rsstojson</a>. <a href="mailto:thorstenwschroeder@gmail.com?Subject=Hello%20again" target="_top">Contact Me</a></p>
+        	</div>
+      </div>    
     </div>
 
     <!-- FACEBOOK -->
@@ -128,6 +109,5 @@
     </script>
     <!-- TWITTER -->
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
   </body>
 </html>
