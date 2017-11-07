@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:dev": "nodemon app.js",
+    "start:dev": "source apikeys.env && nodemon app.js",
     "start:prod": "node app.js"
   },
   "dependencies": {

@@ -59,86 +59,70 @@ app.post('/search', function(req, res) {
 			center: [],
 		};
 
-	request(`http://www.huffingtonpost.com/search?keywords=${newSearch}&sortBy=recency&sortOrder=desc`, function (error, response, html) {
-		if (response.statusCode === 200) {
-			var $ = cheerio.load(html);
-		    $('a.card__link').each(function(i, element){
-			 	const a = $(this), //gives link
-			   		text = a.text(), // gives text in link
-			   		url = a.attr('href'), // gives url
-					story = {
-			  			headline: text,
-			  			link: url
-			   		};
-			    	
-			   	results.left.push(story);
-			});
-		}
+	const searchLeft = function(callback) {
+		console.log(callback)
+		request(`http://www.huffingtonpost.com/search?keywords=${newSearch}&sortBy=recency&sortOrder=desc`, function (error, response, html) {
+			if (response.statusCode === 200) {
+				var $ = cheerio.load(html);
+			    $('a.card__link').each(function(i, element){
+				 	const a = $(this), //gives link
+				   		text = a.text(), // gives text in link
+				   		url = a.attr('href'), // gives url
+						story = {
+				  			headline: text,
+				  			link: url
+				   		};
+				    	
+				   	results.left.push(story);
+				});
 
-		res.render("results", { results });
-	})
+				callback(searchRight())
+			}
+		})
+	}
 
+	const searchRight = function(callback) {
+		request(`http://api.foxnews.com/v1/content/search?q=${newSearch}&fields=description,title,url,image,type,taxonomy&sort=latest&section.path=fnc&type=article&start=0&callback=angular.callbacks._0&cb=201735140`, function (error, response, html) {
+			if (!error && response.statusCode == 200) {
+				var body = response.body.slice(21, response.body.length-1);
+				var bodyObj = JSON.parse(body);
+									
+				results.right = bodyObj.response.docs;
+				callback()					    
+			} else {
+				res.status(500).render("error");
+			}
+		});
+	}
 
+	const searchCenter = function(callback) {
+		request(`http://hosted.ap.org/dynamic/external/search.hosted.ap.org/wireCoreTool/Search?SITE=AP&SECTION=HOME&TEMPLATE=DEFAULT&query=${newSearch}`, function (error, response, html) {
+			if (response.statusCode === 200) {
+				var $ = cheerio.load(response.body);
 
+				$('span.latestnews > a').each(function(i, element){
+					var a = $(this), //gives link
+						text = a.text(), // gives text in link
+			 			url = 'http://hosted.ap.org/' + a.attr('href'), // gives url
+					    story = {
+							headline: text,
+							link: url
+					  	}
 
-	// request('http://www.huffingtonpost.com/search?keywords='+ newSearch + '&sortBy=recency&sortOrder=desc', function (error, response, html) {
-			
-	// 	// if (error) {
-	// 	// 	res.status(500).render("error');		
-	// 	// };
+					results.center.push(story);
+			  	});
 
-	// 	if (!error && response.statusCode == 200) {
-	// 		console.log(response.body);
-	// 	    var $ = cheerio.load(html);
+			  	callback(renderSearchResults())
+			};
+		})
+	}
 
-	// 	    $('a.card__link').each(function(i, element){
-	// 		 	var a = $(this); //gives link
-	// 		   	var text = a.text(); // gives text in link
-	// 		   	var url = a.attr('href'); // gives url
+	searchLeft(searchCenter)
 
-	// 		   	story = {
-	// 		  		headline: text,
-	// 		  		link: url
-	// 		   	};
-			    	
-	// 		   	results.left.push(story);
-	// 		});
-	// 	};
-
-	// 	request('http://hosted.ap.org/dynamic/external/search.hosted.ap.org/wireCoreTool/Search?SITE=AP&SECTION=HOME&TEMPLATE=DEFAULT&query=' + newSearch, function (error, response, html) {
-
-	// 		if (!error && response.statusCode == 200) {
-	// 			var $ = cheerio.load(response.body);
-
-	// 			$('span.latestnews > a').each(function(i, element){
-			    	
-	// 				var a = $(this); //gives link
-	// 				var text = a.text(); // gives text in link
-	// 		 		var url = 'http://hosted.ap.org/' + a.attr('href'); // gives url
-
-	// 			    story = {
-	// 					headline: text,
-	// 					link: url
-	// 			  	}
-
-	// 			results.center.push(story);
-	// 		  	});
-		     	
-	// 		};			
-	    
-	// 		request('http://api.foxnews.com/v1/content/search?q=' + newSearch + '&fields=description,title,url,image,type,taxonomy&sort=latest&section.path=fnc&type=article&start=0&callback=angular.callbacks._0&cb=201735140', function (error, response, html) {
-	// 			if (!error && response.statusCode == 200) {
-	// 				var body = response.body.slice(21, response.body.length-1);
-	// 				var bodyObj = JSON.parse(body);
-										
-	// 				results.right = bodyObj.response.docs;
-	// 				res.render("results", { results });					    
-	// 			} else {
-	// 				res.status(500).render("error");
-	// 			}
-	// 		});
-	// 	});
-	// });
+	const renderSearchResults = function() {
+		console.log("finally")
+		// res.render("results", { results });
+	}
 });
 
 app.listen(app.get('port'), function() {
