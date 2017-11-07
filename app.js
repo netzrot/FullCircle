@@ -35,7 +35,6 @@ var CacheTime = 5 * 60 * 1000;
 
 app.get('/', function(req, res) {
 	if (stories.lastUpdated < (new Date()) - CacheTime) {
-		
 		loadStories(process.env).
 		then(function(freshStories) {
 			stories = freshStories;
@@ -44,6 +43,7 @@ app.get('/', function(req, res) {
 			res.render("index", { stories, maxStories: 6 }); // object of arrays
 		}).
 		catch(function(err) {
+			console.log(err)
 			res.status(500).render("error"); //send(err.toString());
 		});
 	} else {
