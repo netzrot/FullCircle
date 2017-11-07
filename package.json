@@ -19,6 +19,9 @@
     "request": "^2.81.0",
     "superagent": "^3.5.0"
   },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  },
   "description": "web app to show the bias in the news",
   "main": "app.js",
   "repository": {
@@ -35,8 +38,5 @@
   "bugs": {
     "url": "https://github.com/netzrot/FullCircle/issues"
   },
-  "homepage": "https://github.com/netzrot/FullCircle#readme",
-  "devDependencies": {
-    "nodemon": "^1.12.1"
-  }
+  "homepage": "https://github.com/netzrot/FullCircle#readme"
 }
