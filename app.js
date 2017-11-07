@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var superagent = require('superagent');
 var cheerio = require('cheerio');
 var request = require('request');
+var favicon = require("serve-favicon");
 
 var loadStories = require('./loadStories');
 //var loadResults = require('./loadResults');
@@ -16,8 +17,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.set('port', (process.env.PORT || 5000)); // Heroku
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -53,76 +53,92 @@ app.get('/', function(req, res) {
 
 
 app.post('/search', function(req, res) {
-	var newSearch = req.body.search;
-
-	results = {
-		left: [],
-		center: [],
-	};
-
-	request('http://www.huffingtonpost.com/search?keywords='+ newSearch + '&sortBy=recency&sortOrder=desc', function (error, response, html) {
-			
-		// if (error) {
-		// 	res.status(500).render("error');		
-		// };
-
-		if (!error && response.statusCode == 200) {
-
-			console.log(response.body);
-		    var $ = cheerio.load(html);
-			    
-		    $('a.card__link').each(function(i, element){
-			    	
-			 	var a = $(this); //gives link
-			   	var text = a.text(); // gives text in link
-			   	var url = a.attr('href'); // gives url
-
-			   	story = {
-			  		headline: text,
-			  		link: url
-			   	};
-			    	
-			   	results.left.push(story);
-		     	
-			});				    
+	const newSearch = req.body.search,
+		results = {
+			left: [],
+			center: [],
 		};
 
-	request('http://hosted.ap.org/dynamic/external/search.hosted.ap.org/wireCoreTool/Search?SITE=AP&SECTION=HOME&TEMPLATE=DEFAULT&query=' + newSearch, function (error, response, html) {
-
-		if (!error && response.statusCode == 200) {
-			var $ = cheerio.load(response.body);
-
-			$('span.latestnews > a').each(function(i, element){
-		    	
-				var a = $(this); //gives link
-				var text = a.text(); // gives text in link
-		 		var url = 'http://hosted.ap.org/' + a.attr('href'); // gives url
-
-			    story = {
-					headline: text,
-					link: url
-			  	}
-
-			results.center.push(story);
-		  	});
-	     	
-		};			
-	    
-	request('http://api.foxnews.com/v1/content/search?q=' + newSearch + '&fields=description,title,url,image,type,taxonomy&sort=latest&section.path=fnc&type=article&start=0&callback=angular.callbacks._0&cb=201735140', function (error, response, html) {
-					
-		if (!error && response.statusCode == 200) {
-			var body = response.body.slice(21, response.body.length-1);
-			var bodyObj = JSON.parse(body);
-								
-			results.right = bodyObj.response.docs;
-			res.render("results", { results });					    
-		} else {
-			res.status(500).render("error");
+	request(`http://www.huffingtonpost.com/search?keywords=${newSearch}&sortBy=recency&sortOrder=desc`, function (error, response, html) {
+		if (response.statusCode === 200) {
+			var $ = cheerio.load(html);
+		    $('a.card__link').each(function(i, element){
+			 	const a = $(this), //gives link
+			   		text = a.text(), // gives text in link
+			   		url = a.attr('href'), // gives url
+					story = {
+			  			headline: text,
+			  			link: url
+			   		};
+			    	
+			   	results.left.push(story);
+			});
 		}
-	});
-	});
-	});
-	
+
+		res.render("results", { results });
+	})
+
+
+
+
+	// request('http://www.huffingtonpost.com/search?keywords='+ newSearch + '&sortBy=recency&sortOrder=desc', function (error, response, html) {
+			
+	// 	// if (error) {
+	// 	// 	res.status(500).render("error');		
+	// 	// };
+
+	// 	if (!error && response.statusCode == 200) {
+	// 		console.log(response.body);
+	// 	    var $ = cheerio.load(html);
+
+	// 	    $('a.card__link').each(function(i, element){
+	// 		 	var a = $(this); //gives link
+	// 		   	var text = a.text(); // gives text in link
+	// 		   	var url = a.attr('href'); // gives url
+
+	// 		   	story = {
+	// 		  		headline: text,
+	// 		  		link: url
+	// 		   	};
+			    	
+	// 		   	results.left.push(story);
+	// 		});
+	// 	};
+
+	// 	request('http://hosted.ap.org/dynamic/external/search.hosted.ap.org/wireCoreTool/Search?SITE=AP&SECTION=HOME&TEMPLATE=DEFAULT&query=' + newSearch, function (error, response, html) {
+
+	// 		if (!error && response.statusCode == 200) {
+	// 			var $ = cheerio.load(response.body);
+
+	// 			$('span.latestnews > a').each(function(i, element){
+			    	
+	// 				var a = $(this); //gives link
+	// 				var text = a.text(); // gives text in link
+	// 		 		var url = 'http://hosted.ap.org/' + a.attr('href'); // gives url
+
+	// 			    story = {
+	// 					headline: text,
+	// 					link: url
+	// 			  	}
+
+	// 			results.center.push(story);
+	// 		  	});
+		     	
+	// 		};			
+	    
+	// 		request('http://api.foxnews.com/v1/content/search?q=' + newSearch + '&fields=description,title,url,image,type,taxonomy&sort=latest&section.path=fnc&type=article&start=0&callback=angular.callbacks._0&cb=201735140', function (error, response, html) {
+	// 			if (!error && response.statusCode == 200) {
+	// 				var body = response.body.slice(21, response.body.length-1);
+	// 				var bodyObj = JSON.parse(body);
+										
+	// 				results.right = bodyObj.response.docs;
+	// 				res.render("results", { results });					    
+	// 			} else {
+	// 				res.status(500).render("error");
+	// 			}
+	// 		});
+	// 	});
+	// });
 });
 
 app.listen(app.get('port'), function() {
