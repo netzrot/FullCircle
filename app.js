@@ -6,6 +6,10 @@ var superagent = require('superagent');
 var cheerio = require('cheerio');
 var request = require('request');
 var favicon = require("serve-favicon");
+var API_KEYS = {
+	NEWSAPI_KEY: process.env.NEWSAPI_KEY,
+	RSSJSON_KEY: process.env.RSSJSON_KEY
+};
 
 var loadStories = require('./loadStories');
 //var loadResults = require('./loadResults');
@@ -23,7 +27,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 var stories = {
 	lastUpdated: 0, // 1970
 	left: [],
@@ -31,11 +34,11 @@ var stories = {
 	right: []
 };
 
-var CacheTime = 5 * 60 * 1000;
+const CacheTime = 5 * 60 * 1000;
 
 app.get('/', function(req, res) {
 	if (stories.lastUpdated < (new Date()) - CacheTime) {
-		loadStories(process.env).
+		loadStories(API_KEYS).
 		then(function(freshStories) {
 			stories = freshStories;
 			stories.lastUpdated = new Date();
@@ -60,7 +63,6 @@ app.post('/search', function(req, res) {
 		};
 
 	const searchLeft = function(callback) {
-		console.log(callback)
 		request(`http://www.huffingtonpost.com/search?keywords=${newSearch}&sortBy=recency&sortOrder=desc`, function (error, response, html) {
 			if (response.statusCode === 200) {
 				var $ = cheerio.load(html);

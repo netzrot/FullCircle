@@ -1,20 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>FullStory</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- META PROPS FOR FACEBOOK SHARE BUTTON -->
-    <meta property="og:url"           content="https://thefullstory.herokuapp.com/" />
-    <meta property="og:type"          content="website" />
-    <meta property="og:title"         content="FullStory" />
-    <meta property="og:description"   content="put the news in perspective" />
-    <meta property="og:image"         content="https://thefullstory.herokuapp.com/" />
-  </head>
+  <% include ./partials/head %>
   <body>
   <!-- FACEBOOK SHARE BUTTON DEPENDENCY -->
   <div id="fb-root"></div>
@@ -22,14 +8,7 @@
   <div class="container">
         <center> <a href='/'><h1>FullStory<small> put the news in perspective.</small></h1></a></center>
 
-        <div id="social-media">
-          <div class="fb-share-button social-media-button-container" data-href="https://thefullstory.herokuapp.com/" data-layout="button_count" data-size="large" data-mobile-iframe="true">
-            <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fthefullstory.herokuapp.com%2F&amp;src=sdkpreparse">Share</a>
-          </div><p />
-          <div class="social-media-button-container">
-            <a href="https://twitter.com/intent/tweet?text=Put%20the%20news%20in%20perspective%20with%20FullStory&hashtags=thefullstory,media" class="twitter-share-button" data-show-count="false" data-size="large">Tweet</a>
-          </div>
-        </div>
+        <% include ./partials/social_media %>
 
             <br>
             <br>
