@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:dev": "nodemon app.js",
+    "start:prod": "node app.js"
   },
   "dependencies": {
     "body-parser": "~1.16.0",
@@ -12,6 +14,7 @@
     "debug": "~2.6.0",
     "ejs": "~2.5.5",
     "express": "~4.14.1",
+    "if-env": "^1.0.0",
     "morgan": "~1.7.0",
     "request": "^2.81.0",
     "superagent": "^3.5.0"
@@ -32,5 +35,8 @@
   "bugs": {
     "url": "https://github.com/netzrot/FullCircle/issues"
   },
-  "homepage": "https://github.com/netzrot/FullCircle#readme"
+  "homepage": "https://github.com/netzrot/FullCircle#readme",
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
 }
