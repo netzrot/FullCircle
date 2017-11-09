@@ -22,6 +22,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.set('port', (process.env.PORT || 5000)); // Heroku
 
+
 app.use(compression())
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.use(logger('dev'));
@@ -84,20 +85,16 @@ app.post('/search', function(req, res) {
 
 
 	request('http://www.huffingtonpost.com/search?keywords='+ newSearch + '&sortBy=recency&sortOrder=desc', function (error, response, html) {
-			
 		// if (error) {
 		// 	res.status(500).render("error');		
 		// };
-
 		if (!error && response.statusCode == 200) {
 		    var $ = cheerio.load(html);
-			    
-		    $('a.card__link').each(function(i, element){
-			    	
-			 	var a = $(this); //gives link
-			   	var text = a.text(); // gives text in link
-			   	var url = a.attr('href'); // gives url
 
+		    $('a.card__link').each(function(i, element){
+			 	let a = $(this); //gives link
+			   	let text = a.text(); // gives text in link
+			   	let url = a.attr('href'); // gives url
 			   	story = {
 			  		title: text,
 			  		url: `https://www.huffingtonpost.com/${url}`
@@ -149,7 +146,6 @@ app.post('/search', function(req, res) {
 	});
 	});
 	});
-	
 });
 
 
