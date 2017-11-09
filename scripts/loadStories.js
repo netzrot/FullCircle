@@ -59,8 +59,6 @@ module.exports = function loadStories({ NEWSAPI_KEY, RSSJSON_KEY }) {
 				   		stories.right = response.body.items; // response.body.items is an array
 
 				   		resolve(stories);
-
-				   		// NEED TO HANDLE - SOMETIMES response.body.items IS AN EMPTY ARRAY!
 			 	});
 			});  
 		});

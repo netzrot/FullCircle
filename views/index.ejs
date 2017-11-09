@@ -27,36 +27,48 @@
     <div class="row">
       <div class="col-sm-4" class="source">
         <center><h2 class="lead">top news from the L E F T</h2></center><br />
-        <% for (let i = 0; i < maxStories; i++) { %>
-          <div class="stories">
-            <h4><%= stories.left[i].title %></h4>
-            <p id="description"><%= stories.left[i].description %></p>
-            <p><%= stories.left[i].publishedAt %></p>
-            <a target="_blank" href=<%= stories.left[i].url %>>Read full story<br><br></a>
-          </div>
+        <% if (stories.left.length > 0) { %>
+          <% for (let i = 0; i < maxStories; i++) { %>
+            <div class="stories">
+              <h4><%= stories.left[i].title %></h4>
+              <p id="description"><%= stories.left[i].description %></p>
+              <p><%= stories.left[i].publishedAt %></p>
+              <a target="_blank" href=<%= stories.left[i].url %>>Read full story<br><br></a>
+            </div>
+          <% } %>
+        <% } else { %>
+          <% include ./partials/story_loading_error %>
         <% } %>
       </div>
       <div class="col-sm-4" class="source">
         <center><h2 class="lead">top news from the C E N T E R</h2></center><br />
-        <% for (i = 0; i < 6; i++) { %>
-          <div class="stories">
-            <h4><%= stories.center[i].title %></h4>
-            <p id="description"><%= stories.center[i].description %></p>
-            <p><%= stories.center[i].publishedAt %></p>
-            <a target="_blank" href=<%= stories.center[i].url %>>Read full story<br><br></a>
-          </div>
+        <% if (stories.center.length > 0) { %>
+          <% for (i = 0; i < 6; i++) { %>
+            <div class="stories">
+              <h4><%= stories.center[i].title %></h4>
+              <p id="description"><%= stories.center[i].description %></p>
+              <p><%= stories.center[i].publishedAt %></p>
+              <a target="_blank" href=<%= stories.center[i].url %>>Read full story<br><br></a>
+            </div>
+          <% } %>
+        <% } else { %>
+          <% include ./partials/story_loading_error %>
         <% } %>
       </div>
       <div class="col-sm-4" class="source">
         <center><h2 class="lead">top news from the R I G H T</h2></center><br />
-        <% for (i = 0; i < 6; i++) { %>
-          <div class="stories">
-            <h4><%= stories.right[i].title %></h4>
-            <p id="description"><%= stories.right[i].description %></p>
-            <p><%= stories.right[i].pubDate %></p>
-            <a target="_blank" href=<%= stories.right[i].link %>>Read full story<br><br></a>
-          </div>
-        <% } %> 
+        <% if (stories.right.length > 0) { %>
+          <% for (i = 0; i < 6; i++) { %>
+            <div class="stories">
+              <h4><%= stories.right[i].title %></h4>
+              <p id="description"><%= stories.right[i].description %></p>
+              <p><%= stories.right[i].pubDate %></p>
+              <a target="_blank" href=<%= stories.right[i].link %>>Read full story<br><br></a>
+            </div>
+          <% } %>
+        <% } else { %>
+          <% include ./partials/story_loading_error %>
+        <% } %>
       </div><br /><br /><br /><br />
       <div class="row">
         <div class="col-sm-12" id="ap">
