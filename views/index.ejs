@@ -1,112 +1,80 @@
 <!DOCTYPE html>
 <html>
-  <% include ./partials/head %>
-  <body>
+<% include ./partials/head %>
+<body>
   <!-- FACEBOOK SHARE BUTTON DEPENDENCY -->
   <div id="fb-root"></div>
-
   <div class="container">
-      <center> <a href='/'><h1>FullStory<small> put the news in perspective.</small></h1></a></center> 
-
-      <% include ./partials/social_media %>
-
-      <br>
-      <br>
-        <div class="row"> 
-            <div class="col-sm-12">
-            <center>
-              <form action="/search" method="POST" class="form-inline">
-                  <div class="form-group">
-                    <label for="search">Search for topic:</label>
-                    <input type="text" class="form-control" name="search">
-                  </div>
-                  <button type="submit" id="submit" class="btn btn-default">Submit</button>
-              </form>
-              </center>
+    <center>
+      <a href='/'>
+        <h1>FullStory<small> put the news in perspective.</small></h1>
+      </a>
+    </center> 
+    <% include ./partials/social_media %><br /><br />
+    <div class="row"> 
+      <div class="col-sm-12">
+        <center>
+          <form action="/search" method="POST" class="form-inline">
+            <div class="form-group">
+              <label for="search">Search for topic:</label>
+              <input type="text" class="form-control" name="search">
             </div>
-        </div>
-    <br>
-    <br>
-    <br>
-
-        <div class="row">
-
-          	<div class="col-sm-4" class="source">
-          	<center><h2 class="lead">top news from the L E F T</h2></center>
-          	<br>
-         	
-			<% for (i = 0; i < maxStories; i++) { %>
-
-			<div class="stories">
-				<h4><%= stories.left[i].title %></h4>
-				<p id="description"><%= stories.left[i].description %></p>
-				<p><%= stories.left[i].publishedAt %></p>
-				<a target="_blank" href=<%= stories.left[i].url %>>Read full story<br><br></a>
-			</div>
-
-			<% } %> 
-
-        </div>
-
-        <div class="col-sm-4" class="source">
-        	<center><h2 class="lead">top news from the C E N T E R</h2></center>
-          	<br>
-         	
-			<% for (i = 0; i < 6; i++) { %>
-
-			<div class="stories">
-				<h4><%= stories.center[i].title %></h4>
-				<p id="description"><%= stories.center[i].description %></p>
-				<p><%= stories.center[i].publishedAt %></p>
-				<a target="_blank" href=<%= stories.center[i].url %>>Read full story<br><br></a>
-			</div>
-
-			<% } %> 
-
-        </div>
-
-        <div class="col-sm-4" class="source">
-	        <center><h2 class="lead">top news from the R I G H T</h2></center>
-	        <br>
-	         	
-			<% for (i = 0; i < 6; i++) { %>
-
-			<div class="stories">
-				<h4><%= stories.right[i].title %></h4>
-				<p id="description"><%= stories.right[i].description %></p>
-				<p><%= stories.right[i].pubDate %></p>
-				<a target="_blank" href=<%= stories.right[i].link %>>Read full story<br><br></a>
-			</div>
-
-			<% } %> 
-
+            <button type="submit" id="submit" class="btn btn-default">Submit</button>
+          </form>
+        </center>
+      </div>
+    </div><br /><br /><br />
+    <div class="row">
+      <div class="col-sm-4" class="source">
+        <center><h2 class="lead">top news from the L E F T</h2></center><br />
+        <% for (let i = 0; i < maxStories; i++) { %>
+          <div class="stories">
+            <h4><%= stories.left[i].title %></h4>
+            <p id="description"><%= stories.left[i].description %></p>
+            <p><%= stories.left[i].publishedAt %></p>
+            <a target="_blank" href=<%= stories.left[i].url %>>Read full story<br><br></a>
           </div>
-
-        <br>
-        <br>
-        <br>
-        <br>
-
-        <div class="row">
-          	<div class="col-sm-12" id="ap">
-          		<p>with support from <a target="_blank" href="https://newsapi.org">newsapi</a> and <a target="_blank" href="https://rss2json.com/">rsstojson</a>. <a href="mailto:thorstenwschroeder@gmail.com?Subject=Hello%20again" target="_top">Contact Me</a></p>
-          	</div>
+        <% } %>
+      </div>
+      <div class="col-sm-4" class="source">
+        <center><h2 class="lead">top news from the C E N T E R</h2></center><br />
+        <% for (i = 0; i < 6; i++) { %>
+          <div class="stories">
+            <h4><%= stories.center[i].title %></h4>
+            <p id="description"><%= stories.center[i].description %></p>
+            <p><%= stories.center[i].publishedAt %></p>
+            <a target="_blank" href=<%= stories.center[i].url %>>Read full story<br><br></a>
+          </div>
+        <% } %>
+      </div>
+      <div class="col-sm-4" class="source">
+        <center><h2 class="lead">top news from the R I G H T</h2></center><br />
+        <% for (i = 0; i < 6; i++) { %>
+          <div class="stories">
+            <h4><%= stories.right[i].title %></h4>
+            <p id="description"><%= stories.right[i].description %></p>
+            <p><%= stories.right[i].pubDate %></p>
+            <a target="_blank" href=<%= stories.right[i].link %>>Read full story<br><br></a>
+          </div>
+        <% } %> 
+      </div><br /><br /><br /><br />
+      <div class="row">
+        <div class="col-sm-12" id="ap">
+          <p>with support from <a target="_blank" href="https://newsapi.org">newsapi</a> and <a target="_blank" href="https://rss2json.com/">rsstojson</a>. <a href="mailto:thorstenwschroeder@gmail.com?Subject=Hello%20again" target="_top">Contact Me</a></p>
         </div>
-
-          
+      </div>
     </div>
-
-    <!-- FACEBOOK -->
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
-      fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    </script>
-    <!-- TWITTER -->
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-  </body>
+  </div>
+  <!-- FACEBOOK -->
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <!-- TWITTER -->
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</body>
 </html>
