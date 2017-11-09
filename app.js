@@ -12,7 +12,7 @@ var API_KEYS = {
 };
 var compression = require("compression")
 
-var loadStories = require('./loadStories');
+var loadStories = require('./scripts/loadStories');
 //var loadResults = require('./loadResults');
 
 var app = express();
