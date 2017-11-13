@@ -105,7 +105,7 @@ app.post('/search', function(req, res) {
 		     	
 			});				    
 		};
-
+		
 	// IT LOOKS LIKE REQUESTS TO THE AP HAVE A NEW RESPONSE FORMAT, THE response.body DOESN'T APPEAR TO HAVE THE NECESSARY ELEMENTS ANYMORE
 	request('http://hosted.ap.org/dynamic/external/search.hosted.ap.org/wireCoreTool/Search?SITE=AP&SECTION=HOME&TEMPLATE=DEFAULT&query=' + newSearch, function (error, response, html) {
 
