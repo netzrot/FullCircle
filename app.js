@@ -108,25 +108,26 @@ app.post('/search', function(req, res) {
 		
 	// IT LOOKS LIKE REQUESTS TO THE AP HAVE A NEW RESPONSE FORMAT, THE response.body DOESN'T APPEAR TO HAVE THE NECESSARY ELEMENTS ANYMORE
 	request('http://hosted.ap.org/dynamic/external/search.hosted.ap.org/wireCoreTool/Search?SITE=AP&SECTION=HOME&TEMPLATE=DEFAULT&query=' + newSearch, function (error, response, html) {
-
+	
 		if (!error && response.statusCode == 200) {
-			var $ = cheerio.load(response.body);
+		 	var $ = cheerio.load(response.body);
 
-			console.log(response.body)
+			console.log(response.body);
+			
 
-			$('span.latestnews > a').each(function(i, element){
-				var a = $(this); //gives link
-				var text = a.text(); // gives text in link
-		 		var url = 'http://hosted.ap.org/' + a.attr('href'); // gives url
+			// $('span.latestnews > a').each(function(i, element){
+			// 	var a = $(this); //gives link
+			// 	var text = a.text(); // gives text in link
+		 // 		var url = 'http://hosted.ap.org/' + a.attr('href'); // gives url
 
-			    story = {
-					title: text,
-					url: url
-			  	}
+			//     story = {
+			// 		title: text,
+			// 		url: url
+			//   	}
 
-				// results.center.push(story);
-				stories.center.push(story);
-		  	});
+			// 	// results.center.push(story);
+			// 	stories.center.push(story);
+		 //  	});
 	     	
 		};			
 	    
