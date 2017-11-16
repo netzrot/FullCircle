@@ -107,27 +107,25 @@ app.post('/search', function(req, res) {
 		};
 		
 	// IT LOOKS LIKE REQUESTS TO THE AP HAVE A NEW RESPONSE FORMAT, THE response.body DOESN'T APPEAR TO HAVE THE NECESSARY ELEMENTS ANYMORE
-	request('http://hosted.ap.org/dynamic/external/search.hosted.ap.org/wireCoreTool/Search?SITE=AP&SECTION=HOME&TEMPLATE=DEFAULT&query=' + newSearch, function (error, response, html) {
-
+	request('http://www.reuters.com/search/news?blob=' + newSearch + '&sortBy=date&dateRange=all', function (error, response, html) {
+	
 		if (!error && response.statusCode == 200) {
-			var $ = cheerio.load(response.body);
+		 	var $ = cheerio.load(html);
 
-			console.log(response.body)
+		 	$('h3.search-result-title').each(function(i, element) {
 
-			$('span.latestnews > a').each(function(i, element){
-				var a = $(this); //gives link
-				var text = a.text(); // gives text in link
-		 		var url = 'http://hosted.ap.org/' + a.attr('href'); // gives url
+		 		let h3 = $(this); 
+		 		let a = h3.children("a"); // gives link
+		 		let url = a.attr('href'); // gives url
+		 		let text = a.text(); // gives text in link
+		 		//console.log(text);
+		 		story = {
+		 			title: text,
+		 			url: `http://www.reuters.com/${url}`
+		 		};
 
-			    story = {
-					title: text,
-					url: url
-			  	}
-
-				// results.center.push(story);
-				stories.center.push(story);
-		  	});
-	     	
+		 		stories.center.push(story);
+		 	})	     	
 		};			
 	    
 	request('http://api.foxnews.com/v1/content/search?q=' + newSearch + '&fields=description,title,url,image,type,taxonomy&sort=latest&section.path=fnc&type=article&start=0&callback=angular.callbacks._0&cb=201735140', function (error, response, html) {
