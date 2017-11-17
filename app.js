@@ -70,12 +70,6 @@ app.get('/', function(req, res) {
 app.post('/search', function(req, res) {
 	var newSearch = req.body.search;
 
-	// results = {
-	// 	left: [],
-	// 	center: [],
-	// };
-
-	// testing
 	// THIS SORT OF WORKS FOR NOW, BUT IS NOT A FINAL SOLUTION
 	stories = {
 		left: [],
@@ -92,21 +86,22 @@ app.post('/search', function(req, res) {
 		    var $ = cheerio.load(html);
 
 		    $('a.card__link').each(function(i, element){
-			 	let a = $(this); //gives link
-			   	let text = a.text(); // gives text in link
-			   	let url = a.attr('href'); // gives url
-			   	story = {
-			  		title: text,
-			  		url: `https://www.huffingtonpost.com/${url}`
-			   	};
-			    	
-			   	// results.left.push(story);
-			   	stories.left.push(story);
-		     	
+		    	// THE a.card__link ELEMENTS RETURN A DUPLICATE OF EACH STORY, WHERE THE TITLE FOR THE SECOND IS JUST A BUNCH OF NEWLINES - '\n\n\n\n\n\n'
+		    	// WE WANT EVERY EVEN-INDEXED STORY INCLUDING 0, WHICH IS THE FIRST OF EACH PAIR
+		    	if (i === 0 || i % 2 === 0) {
+				 	let a = $(this); //gives link
+				   	let text = a.text(); // gives text in link
+				   	let url = a.attr('href'); // gives url
+				   	let story = {
+				  		title: text,
+				  		url: `https://www.huffingtonpost.com${url}`
+				   	};
+
+				   	stories.left.push(story);
+				}
 			});				    
 		};
-		
-	// IT LOOKS LIKE REQUESTS TO THE AP HAVE A NEW RESPONSE FORMAT, THE response.body DOESN'T APPEAR TO HAVE THE NECESSARY ELEMENTS ANYMORE
+
 	request('http://www.reuters.com/search/news?blob=' + newSearch + '&sortBy=date&dateRange=all', function (error, response, html) {
 	
 		if (!error && response.statusCode == 200) {
@@ -118,30 +113,26 @@ app.post('/search', function(req, res) {
 		 		let a = h3.children("a"); // gives link
 		 		let url = a.attr('href'); // gives url
 		 		let text = a.text(); // gives text in link
-		 		//console.log(text);
-		 		story = {
+		 		let story = {
 		 			title: text,
-		 			url: `http://www.reuters.com/${url}`
+		 			url: `http://www.reuters.com${url}`
 		 		};
 
 		 		stories.center.push(story);
 		 	})	     	
 		};			
-	    
-	request('http://api.foxnews.com/v1/content/search?q=' + newSearch + '&fields=description,title,url,image,type,taxonomy&sort=latest&section.path=fnc&type=article&start=0&callback=angular.callbacks._0&cb=201735140', function (error, response, html) {
-					
-		if (!error && response.statusCode == 200) {
-			var body = response.body.slice(21, response.body.length-1);
-			var bodyObj = JSON.parse(body);
-								
-			// results.right = bodyObj.response.docs;
-			stories.right = bodyObj.response.docs;
-			// res.render("index", { results, maxStories: maxStories });
-			res.render("index", { stories, maxStories: maxStories });					    
-		} else {
-			res.status(500).render("error");
-		}
-	});
+
+		request('http://api.foxnews.com/v1/content/search?q=' + newSearch + '&fields=description,title,url,image,type,taxonomy&sort=latest&section.path=fnc&type=article&start=0&callback=angular.callbacks._0&cb=201735140', function (error, response, html) {
+			if (!error && response.statusCode == 200) {
+				var body = response.body.slice(21, response.body.length-1);
+				var bodyObj = JSON.parse(body);
+				stories.right = bodyObj.response.docs;					    
+			} else {
+				return res.status(500).render("error");
+			}
+
+			res.render("index", { stories, maxStories: maxStories })
+		});
 	});
 	});
 });
