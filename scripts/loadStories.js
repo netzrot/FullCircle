@@ -54,6 +54,10 @@ module.exports = function loadStories({ NEWSAPI_KEY, RSSJSON_KEY }) {
 
 				   		for (var i = 0; i < response.body.items.length; i++) {
 				   			response.body.items[i].description = response.body.items[i].description.split("<img")[0].substring(0,145)+"...";
+				   			// IN THIS CONTEXT, THE URL TO THE STORY IS AN ATTRIBUTE CALLED link - 
+				   			// HOWEVER, IN ALL OTHER CONTEXTS, WE'RE LOOKING FOR SOMETHING CALLED url.
+				   			// JUST ADD A url ATTRIBUTE TO THE OBJECT WITH THE SAME VALUE AS link.
+				   			response.body.items[i].url = response.body.items[i].link
 				   		}
 
 				   		stories.right = response.body.items; // response.body.items is an array

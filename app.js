@@ -11,10 +11,7 @@ var API_KEYS = {
 	RSSJSON_KEY: process.env.RSSJSON_KEY
 };
 var compression = require("compression")
-
 var loadStories = require('./scripts/loadStories');
-//var loadResults = require('./loadResults');
-
 var app = express();
 
 // view engine setup
@@ -50,7 +47,7 @@ app.get('/', function(req, res) {
 		right: []
 	};
 
-	if (stories.lastUpdated < (new Date()) - CacheTime) {
+	// if (stories.lastUpdated < (new Date()) - CacheTime) {
 		loadStories(API_KEYS).
 		then(function(freshStories) {
 			stories = freshStories;
@@ -62,9 +59,9 @@ app.get('/', function(req, res) {
 			console.log(err)
 			res.status(500).render("error"); //send(err.toString());
 		});
-	} else {
-		res.render("index", { stories, maxStories: maxStories }); // object of arrays
-	}
+	// } else {
+	// 	res.render("index", { stories, maxStories: maxStories }); // object of arrays
+	// }
 });
 
 app.post('/search', function(req, res) {
