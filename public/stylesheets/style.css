@@ -12,32 +12,36 @@ a:hover {
 }
 
 h1 {
-    font-size: 80px;
+  font-size: 80px;
 }
 
 h2 {
-    font-size: 40px;
-    font-weight: bold;
+  font-size: 40px;
+  font-weight: bold;
 }
 
 h4 {
-    text-align: justify;
+  text-align: justify;
 }
 
 p {
-    text-align: justify;
+  text-align: justify;
 }
 
 img {
-    height: 200px;
-    width: 200px;
-
-span {
-
+  height: 200px;
+  width: 200px;
 }
 
-.about {
-  width: 400px;
-  margin-top: 400px;
+.headline {
+  height: 36px;
+  display: inline-block;
 }
 
+.headline:hover {
+  border-bottom: solid #23527C 2px;
+}
+
+.headline_link:hover {
+  text-decoration: none;
+}
