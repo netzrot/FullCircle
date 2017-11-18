@@ -36,15 +36,6 @@ const CacheTime = 5 * 60 * 1000,
 	maxStories = 6
 
 app.get('/', function(req, res) {
-	// // THIS IS NOT A FINAL SOLUTION
-	// // JUST NEED TO CLEAR OUT stories HERE FOR THE TIME BEING...
-	// stories = {
-	// 	lastUpdated: 0, // 1970
-	// 	left: [],
-	// 	center: [],
-	// 	right: []
-	// };
-
 	if (stories.lastUpdated < (new Date()) - CacheTime) {
 		loadStories(API_KEYS, undefined).
 		then(function(freshStories) {
