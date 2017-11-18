@@ -4,7 +4,6 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var superagent = require('superagent');
 var cheerio = require('cheerio');
-var request = require('request');
 var favicon = require("serve-favicon");
 var API_KEYS = {
 	NEWSAPI_KEY: process.env.NEWSAPI_KEY,
@@ -46,8 +45,8 @@ app.get('/', function(req, res) {
 		right: []
 	};
 
-	// if (stories.lastUpdated < (new Date()) - CacheTime) {
-		loadStories(API_KEYS).
+	if (stories.lastUpdated < (new Date()) - CacheTime) {
+		loadStories(API_KEYS, undefined).
 		then(function(freshStories) {
 			stories = freshStories;
 			stories.lastUpdated = new Date();
@@ -58,153 +57,19 @@ app.get('/', function(req, res) {
 			console.log(err)
 			res.status(500).render("error"); //send(err.toString());
 		});
-	// } else {
-	// 	res.render("index", { stories, maxStories: maxStories }); // object of arrays
-	// }
-});
-
-app.post('/search', function(req, res) {
-	var newSearch = req.body.search;
-
-	// THIS SORT OF WORKS FOR NOW, BUT IS NOT A FINAL SOLUTION
-	stories = {
-		left: [],
-		center: [],
-		right: []
+	} else {
+		res.render("index", { stories, maxStories: maxStories }); // object of arrays
 	}
-
-
-	request('http://www.huffingtonpost.com/search?keywords='+ newSearch + '&sortBy=recency&sortOrder=desc', function (error, response, html) {
-		// if (error) {
-		// 	res.status(500).render("error');		
-		// };
-		if (!error && response.statusCode == 200) {
-		    var $ = cheerio.load(html);
-
-		    $('a.card__link').each(function(i, element){
-		    	// THE a.card__link ELEMENTS RETURN A DUPLICATE OF EACH STORY, WHERE THE TITLE FOR THE SECOND IS JUST A BUNCH OF NEWLINES - '\n\n\n\n\n\n'
-		    	// WE WANT EVERY EVEN-INDEXED STORY INCLUDING 0, WHICH IS THE FIRST OF EACH PAIR
-		    	if (i === 0 || i % 2 === 0) {
-				 	let a = $(this); //gives link
-				   	let text = a.text(); // gives text in link
-				   	let url = a.attr('href'); // gives url
-				   	let story = {
-				  		title: text,
-				  		url: `https://www.huffingtonpost.com${url}`
-				   	};
-
-				   	stories.left.push(story);
-				}
-			});				    
-		};
-
-	request('http://www.reuters.com/search/news?blob=' + newSearch + '&sortBy=date&dateRange=all', function (error, response, html) {
-	
-		if (!error && response.statusCode == 200) {
-		 	var $ = cheerio.load(html);
-
-		 	$('h3.search-result-title').each(function(i, element) {
-
-		 		let h3 = $(this); 
-		 		let a = h3.children("a"); // gives link
-		 		let url = a.attr('href'); // gives url
-		 		let text = a.text(); // gives text in link
-		 		let story = {
-		 			title: text,
-		 			url: `http://www.reuters.com${url}`
-		 		};
-
-		 		stories.center.push(story);
-		 	})	     	
-		};			
-
-		request('http://api.foxnews.com/v1/content/search?q=' + newSearch + '&fields=description,title,url,image,type,taxonomy&sort=latest&section.path=fnc&type=article&start=0&callback=angular.callbacks._0&cb=201735140', function (error, response, html) {
-			if (!error && response.statusCode == 200) {
-				var body = response.body.slice(21, response.body.length-1);
-				var bodyObj = JSON.parse(body);
-				stories.right = bodyObj.response.docs;					    
-			} else {
-				return res.status(500).render("error");
-			}
-
-			res.render("index", { stories, maxStories: maxStories })
-		});
-	});
-	});
 });
 
+app.post("/search", (req, res) => {
+	const newSearch = req.body.search;
 
-// app.post('/search', function(req, res) {
-// 	const newSearch = req.body.search,
-// 		results = {
-// 			left: [],
-// 			center: [],
-// 		};
-
-// 	const searchLeft = function(callback) {
-// 		request(`http://www.huffingtonpost.com/search?keywords=${newSearch}&sortBy=recency&sortOrder=desc`, function (error, response, html) {
-// 			if (response.statusCode === 200) {
-// 				var $ = cheerio.load(html);
-// 			    $('a.card__link').each(function(i, element){
-// 				 	const a = $(this), //gives link
-// 				   		text = a.text(), // gives text in link
-// 				   		url = a.attr('href'), // gives url
-// 						story = {
-// 				  			headline: text,
-// 				  			link: url
-// 				   		};
-				    	
-// 				   	results.left.push(story);
-// 				});
-
-// 				callback(searchRight())
-// 			}
-// 		})
-// 	}
-
-// 	const searchRight = function(callback) {
-// 		request(`http://api.foxnews.com/v1/content/search?q=${newSearch}&fields=description,title,url,image,type,taxonomy&sort=latest&section.path=fnc&type=article&start=0&callback=angular.callbacks._0&cb=201735140`, function (error, response, html) {
-// 			if (!error && response.statusCode == 200) {
-// 				var body = response.body.slice(21, response.body.length-1);
-// 				var bodyObj = JSON.parse(body);
-									
-// 				results.right = bodyObj.response.docs;
-// 				callback()					    
-// 			} else {
-// 				res.status(500).render("error");
-// 			}
-// 		});
-// 	}
-
-// 	const searchCenter = function(callback) {
-// 		request(`http://hosted.ap.org/dynamic/external/search.hosted.ap.org/wireCoreTool/Search?SITE=AP&SECTION=HOME&TEMPLATE=DEFAULT&query=${newSearch}`, function (error, response, html) {
-// 			if (response.statusCode === 200) {
-// 				var $ = cheerio.load(response.body);
-
-// 				$('span.latestnews > a').each(function(i, element){
-// 					var a = $(this), //gives link
-// 						text = a.text(), // gives text in link
-// 			 			url = 'http://hosted.ap.org/' + a.attr('href'), // gives url
-// 					    story = {
-// 							headline: text,
-// 							link: url
-// 					  	}
-
-// 					results.center.push(story);
-// 			  	});
-
-// 			  	callback(renderSearchResults())
-// 			};
-// 		})
-// 	}
-
-// 	searchLeft(searchCenter)
-
-// 	const renderSearchResults = function() {
-// 		// res.render({ results })
-// 		res.render("index", { results, maxStories: maxStories });
-// 	}
-// });
+	loadStories(API_KEYS, newSearch).
+		then((searchResults) => {
+			res.render("index", { stories: searchResults, maxStories: maxStories })
+		})
+})
 
 app.get("/about", (req, res) => {
 	res.render("about", {})

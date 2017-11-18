@@ -1,6 +1,7 @@
 var superagent = require('superagent');
+var request = require('request');
 
-module.exports = function loadStories({ NEWSAPI_KEY, RSSJSON_KEY }) {
+module.exports = function loadStories({ NEWSAPI_KEY, RSSJSON_KEY }, newSearch) {
 	console.log('loading stories...');
 
 	var stories = {
@@ -9,9 +10,17 @@ module.exports = function loadStories({ NEWSAPI_KEY, RSSJSON_KEY }) {
 		right: []
 	};
 
+	let searchQueryParam = ""
+	let endPoint = "top-headlines"
+
+	if (newSearch) {
+		searchQueryParam = `&q=${newSearch}`
+		endPoint = "everything"
+	}
+
 	return new Promise(function(resolve, reject) {
 		superagent
-		    .get('https://newsapi.org/v2/top-headlines?sources=the-huffington-post&sortBy=top&apiKey=' + NEWSAPI_KEY)
+		    .get(`https://newsapi.org/v2/${endPoint}?sources=the-huffington-post&sortBy=top&apiKey=${NEWSAPI_KEY}${searchQueryParam}`)
 		    .end(function(err, response){
 		    	if (err) {
 		    		return reject(err);
@@ -26,7 +35,7 @@ module.exports = function loadStories({ NEWSAPI_KEY, RSSJSON_KEY }) {
 		   		stories.left = response.body.articles;
 
 			superagent
-			   .get('https://newsapi.org/v2/top-headlines?sources=associated-press&sortBy=top&apiKey=' + NEWSAPI_KEY)
+			   .get(`https://newsapi.org/v2/${endPoint}?sources=associated-press&sortBy=top&apiKey=${NEWSAPI_KEY}${searchQueryParam}`)
 			   .end(function(err, response){
 
 			   		if (err) { return reject(err); }
@@ -47,23 +56,36 @@ module.exports = function loadStories({ NEWSAPI_KEY, RSSJSON_KEY }) {
 			   
 			   		stories.center = response.body.articles; // pushes array into object
 				   
-							   	
-			 	superagent
-				   .get('https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Ffeeds.foxnews.com%2Ffoxnews%2Fmost-popular&api_key=' + RSSJSON_KEY)
-				   .end(function(err, response){
+				if (newSearch) {
+					request(`http://api.foxnews.com/v1/content/search?fields=description,title,url,image,type,taxonomy&sort=latest${searchQueryParam}&section.path=fnc&type=article&start=0&callback=angular.callbacks._0&cb=201735140`, function (error, response, html) {
+						if (!error && response.statusCode == 200) {
+							var body = response.body.slice(21, response.body.length-1);
+							var bodyObj = JSON.parse(body);
+							stories.right = bodyObj.response.docs;
 
-				   		for (var i = 0; i < response.body.items.length; i++) {
-				   			response.body.items[i].description = response.body.items[i].description.split("<img")[0].substring(0,145)+"...";
-				   			// IN THIS CONTEXT, THE URL TO THE STORY IS AN ATTRIBUTE CALLED link - 
-				   			// HOWEVER, IN ALL OTHER CONTEXTS, WE'RE LOOKING FOR SOMETHING CALLED url.
-				   			// JUST ADD A url ATTRIBUTE TO THE OBJECT WITH THE SAME VALUE AS link.
-				   			response.body.items[i].url = response.body.items[i].link
-				   		}
+							console.log(stories.right[0])
 
-				   		stories.right = response.body.items; // response.body.items is an array
+							resolve(stories)				    
+						}
+					});
+				} else {
+				 	superagent
+					   .get(`https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Ffeeds.foxnews.com%2Ffoxnews%2Fmost-popular&api_key=${RSSJSON_KEY}`)
+					   .end(function(err, response){
 
-				   		resolve(stories);
-			 	});
+					   		for (var i = 0; i < response.body.items.length; i++) {
+					   			response.body.items[i].description = response.body.items[i].description.split("<img")[0].substring(0,145)+"...";
+					   			// IN THIS CONTEXT, THE URL TO THE STORY IS AN ATTRIBUTE CALLED link - 
+					   			// HOWEVER, IN ALL OTHER CONTEXTS, WE'RE LOOKING FOR SOMETHING CALLED url.
+					   			// JUST ADD A url ATTRIBUTE TO THE OBJECT WITH THE SAME VALUE AS link.
+					   			response.body.items[i].url = response.body.items[i].link
+					   		}
+
+					   		stories.right = response.body.items; // response.body.items is an array
+
+					   		resolve(stories);
+				 	});
+				}
 			});  
 		});
 	});
