@@ -207,6 +207,10 @@ app.post('/search', function(req, res) {
 // 	}
 // });
 
+app.get("/about", (req, res) => {
+	res.render("about", {})
+})
+
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
