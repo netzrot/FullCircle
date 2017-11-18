@@ -11,7 +11,7 @@ module.exports = function loadStories({ NEWSAPI_KEY, RSSJSON_KEY }) {
 
 	return new Promise(function(resolve, reject) {
 		superagent
-		    .get('https://newsapi.org/v1/articles?source=the-huffington-post&sortBy=top&apiKey=' + NEWSAPI_KEY)
+		    .get('https://newsapi.org/v2/top-headlines?sources=the-huffington-post&sortBy=top&apiKey=' + NEWSAPI_KEY)
 		    .end(function(err, response){
 		    	if (err) {
 		    		return reject(err);
@@ -26,7 +26,7 @@ module.exports = function loadStories({ NEWSAPI_KEY, RSSJSON_KEY }) {
 		   		stories.left = response.body.articles;
 
 			superagent
-			   .get('https://newsapi.org/v1/articles?source=associated-press&sortBy=top&apiKey=' + NEWSAPI_KEY)
+			   .get('https://newsapi.org/v2/top-headlines?sources=associated-press&sortBy=top&apiKey=' + NEWSAPI_KEY)
 			   .end(function(err, response){
 
 			   		if (err) { return reject(err); }
