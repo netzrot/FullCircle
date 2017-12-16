@@ -30,6 +30,10 @@ module.exports = function loadStories({ NEWSAPI_KEY, RSSJSON_KEY }, newSearch) {
 		    		return reject(err);
 		    	}
 
+		    	for (var i = 0; i < response.body.articles.length; i++) {
+						response.body.articles[i].description = response.body.articles[i].description.substring(0,145)+"...";
+				}
+
 				for (var i = 0; i < response.body.articles.length; i++) {
 					if (response.body.articles[i].publishedAt) {
 					response.body.articles[i].publishedAt = response.body.articles[i].publishedAt.split("T")[0] + " " + response.body.articles[i].publishedAt.split("T")[1].substring(0, 8);
